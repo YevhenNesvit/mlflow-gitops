@@ -6,8 +6,8 @@ service:
   targetPort: 5000
 
 image:
-  repository: mlflow/mlflow
-  tag: "2.10.2"
+  repository: ghcr.io/mlflow/mlflow
+  tag: "2.22.2"
   pullPolicy: IfNotPresent
   
 postgresql:
