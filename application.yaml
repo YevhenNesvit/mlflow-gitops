@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/YevhenNesvit/mlflow-gitops.git  # Замініть на ваш репозиторій
     targetRevision: main
-    path: mlflow-chart # Шлях до Helm-чарту всередині цього Git-репозиторію
+    path: mlflow # Шлях до Helm-чарту всередині цього Git-репозиторію
   destination:
     server: https://kubernetes.default.svc
     namespace: mlflow
