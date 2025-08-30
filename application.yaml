@@ -7,47 +7,38 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  
+
   source:
     repoURL: https://community-charts.github.io/helm-charts
     chart: mlflow
     targetRevision: "0.7.19"
     helm:
       values: |
-        # MLflow Configuration
-        image:
-          repository: python
-          tag: "3.9-slim"
-          pullPolicy: IfNotPresent
-        
-        # MLflow server configuration
         mlflow:
-          # Backend store (SQLite for demo)
+          server:
+            image:
+              repository: mlflow/mlflow
+              tag: "2.5.0"
+              pullPolicy: IfNotPresent
           backendStore: sqlite:///mlflow/mlflow.db
-          # Artifact store
           artifactRoot: /mlflow/artifacts
-          # Host and port
           host: 0.0.0.0
           port: 5000
-          
-        # Service configuration
+
         service:
           type: ClusterIP
           port: 5000
           targetPort: 5000
-          
-        # Ingress (disabled for port-forward access)
+
         ingress:
           enabled: false
-          
-        # Persistent storage
+
         persistence:
           enabled: true
-          storageClass: "gp2"
+          storageClass: "gp3"
           accessMode: ReadWriteOnce
           size: 10Gi
-          
-        # Resources
+
         resources:
           limits:
             cpu: 500m
@@ -55,33 +46,26 @@ spec:
           requests:
             cpu: 250m
             memory: 512Mi
-            
-        # Environment variables
+
         env:
           - name: MLFLOW_BACKEND_STORE_URI
             value: "sqlite:///mlflow/mlflow.db"
           - name: MLFLOW_DEFAULT_ARTIFACT_ROOT
             value: "/mlflow/artifacts"
-            
-        # Security context
+
         securityContext:
           runAsUser: 1000
           runAsGroup: 1000
           fsGroup: 1000
-          
-        # Node selector (optional)
+
         nodeSelector: {}
-        
-        # Tolerations (optional)
         tolerations: []
-        
-        # Affinity (optional)
         affinity: {}
 
   destination:
     server: https://kubernetes.default.svc
     namespace: mlflow
-    
+
   syncPolicy:
     automated:
       prune: true
@@ -97,9 +81,6 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 3m0s
-        
-  # Health check configuration
+
   ignoreDifferences: []
-  
-  # Revision history limit
   revisionHistoryLimit: 3
