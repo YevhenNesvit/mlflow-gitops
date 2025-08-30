@@ -1,0 +1,29 @@
+replicaCount: 1
+
+service:
+  type: ClusterIP
+  port: 5000
+  targetPort: 5000
+
+image:
+  repository: mlflow/mlflow
+  tag: "2.10.1"
+  pullPolicy: IfNotPresent
+  
+postgresql:
+  enabled: true
+  postgresqlUsername: mlflow
+  postgresqlPassword: mlflowpass
+  postgresqlDatabase: mlflow_db
+  persistence:
+    enabled: true
+    storageClass: gp2
+    size: 5Gi
+
+resources:
+  limits:
+    cpu: "2000m"
+    memory: "4Gi"
+  requests:
+    cpu: "500m"
+    memory: "2Gi"

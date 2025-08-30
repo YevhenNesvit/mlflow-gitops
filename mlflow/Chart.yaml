@@ -1,0 +1,5 @@
+apiVersion: v2
+name: mlflow
+description: A Helm chart for MLflow deployment
+version: 0.1.0
+appVersion: "2.10.1"

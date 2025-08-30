@@ -2,75 +2,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: mlflow
-  namespace: infra-tools
+  namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-
   source:
-    repoURL: https://community-charts.github.io/helm-charts
-    chart: mlflow
-    targetRevision: 0.7.19
-    helm:
-      values: |
-        mlflow:
-          server:
-            image:
-              repository: mlflow/mlflow
-              tag: "2.5.0"
-              pullPolicy: IfNotPresent
-            host: 0.0.0.0
-            port: 5000
-            env:
-              - name: MLFLOW_TRACKING_URI
-                value: "postgresql://mlflow:mlflowpass@mlflow-postgres:5432/mlflow_db"
-
-        service:
-          type: ClusterIP
-          port: 5000
-          targetPort: 5000
-
-        ingress:
-          enabled: false
-
-        persistence:
-          enabled: true
-          storageClass: "gp2"
-          accessMode: ReadWriteOnce
-          size: 10Gi
-
-        resources:
-          limits:
-            cpu: 2
-            memory: 4Gi
-          requests:
-            cpu: 500m
-            memory: 2Gi
-
-        postgresql:
-          enabled: true
-          postgresqlUsername: mlflow
-          postgresqlPassword: mlflowpass
-          postgresqlDatabase: mlflow_db
-          persistence:
-            enabled: true
-            storageClass: gp2
-            size: 5Gi
-
-        securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
-          fsGroup: 1000
-
-        nodeSelector: {}
-        tolerations: []
-        affinity: {}
-
+    repoURL: https://github.com/YevhenNesvit/mlflow-gitops.git  # Замініть на ваш репозиторій
+    targetRevision: main
+    path: mlflow-chart # Шлях до Helm-чарту всередині цього Git-репозиторію
   destination:
     server: https://kubernetes.default.svc
     namespace: mlflow
-
   syncPolicy:
     automated:
       prune: true
@@ -86,6 +29,3 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 3m0s
-
-  ignoreDifferences: []
-  revisionHistoryLimit: 3
