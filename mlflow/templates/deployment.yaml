@@ -33,7 +33,7 @@ spec:
               protocol: TCP
           env:
             - name: MLFLOW_TRACKING_URI
-              value: {{ .Values.mlflow.trackingUri | quote }}  # Змініть шлях для використання SQLite
+              value: {{ .Values.mlflow.trackingUri | quote }}
           volumeMounts:
             - name: mlflow-data
               mountPath: /mnt/mlflow
@@ -42,4 +42,4 @@ spec:
       volumes:
         - name: mlflow-data
           persistentVolumeClaim:
-            claimName: mlflow-pvc
+            claimName: {{ include "mlflow.fullname" . }}
