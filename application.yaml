@@ -13,8 +13,8 @@ spec:
     targetRevision: main
     path: .
     chart: mlflow
-    targetRevision: "0.7.19"
     helm:
+      version: 0.7.19
       values: |
         mlflow:
           server:
