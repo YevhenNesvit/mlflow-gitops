@@ -7,7 +7,7 @@ service:
 
 image:
   repository: ghcr.io/mlflow/mlflow
-  tag: "2.22.2"
+  tag: "2.10.1"
   pullPolicy: IfNotPresent
   
 postgresql:
