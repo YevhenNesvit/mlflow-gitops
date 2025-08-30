@@ -27,3 +27,8 @@ resources:
   requests:
     cpu: "500m"
     memory: "2Gi"
+
+# Додайте цей розділ до mlflow-chart/values.yaml
+serviceAccount:
+  create: true
+  name: "mlflow-service-account"
