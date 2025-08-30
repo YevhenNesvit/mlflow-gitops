@@ -11,6 +11,7 @@ spec:
   source:
     repoURL: https://github.com/YevhenNesvit/mlflow-gitops
     targetRevision: main
+    chart: mlflow
     helm:
       values: |
         mlflow:
