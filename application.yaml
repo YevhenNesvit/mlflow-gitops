@@ -9,9 +9,9 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/YevhenNesvit/mlflow-gitops
-    targetRevision: main
+    repoURL: https://community-charts.github.io/helm-charts
     chart: mlflow
+    targetRevision: 0.7.19
     helm:
       values: |
         mlflow:
