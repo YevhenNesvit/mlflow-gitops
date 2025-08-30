@@ -9,16 +9,15 @@ image:
   repository: ghcr.io/mlflow/mlflow
   tag: "v3.3.2"
   pullPolicy: IfNotPresent
-  
-postgresql:
+
+mlflow:
+  trackingUri: "sqlite:////mnt/mlflow/mlflow.db"
+
+persistence:
   enabled: true
-  postgresqlUsername: mlflow
-  postgresqlPassword: mlflowpass
-  postgresqlDatabase: mlflow_db
-  persistence:
-    enabled: true
-    storageClass: gp2
-    size: 5Gi
+  storageClass: "gp2"
+  accessMode: ReadWriteOnce
+  size: 10Gi
 
 resources:
   limits:

@@ -33,6 +33,13 @@ spec:
               protocol: TCP
           env:
             - name: MLFLOW_TRACKING_URI
-              value: "postgresql://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@{{ include "mlflow.fullname" . }}-postgresql:5432/{{ .Values.postgresql.postgresqlDatabase }}"
+              value: {{ .Values.mlflow.trackingUri | quote }}  # Змініть шлях для використання SQLite
+          volumeMounts:
+            - name: mlflow-data
+              mountPath: /mnt/mlflow
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: mlflow-data
+          persistentVolumeClaim:
+            claimName: mlflow-pvc
