@@ -15,7 +15,7 @@ mlflow:
 
 persistence:
   enabled: true
-  storageClass: "gp2"
+  storageClass: "gp2-immediate"
   accessMode: ReadWriteOnce
   size: 10Gi
 
