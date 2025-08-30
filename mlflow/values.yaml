@@ -7,7 +7,7 @@ service:
 
 image:
   repository: mlflow/mlflow
-  tag: "2.10.1"
+  tag: "2.10.2"
   pullPolicy: IfNotPresent
   
 postgresql:
