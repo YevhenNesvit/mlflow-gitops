@@ -48,11 +48,15 @@ spec:
             cpu: 500m
             memory: 2Gi
 
-        env:
-          - name: MLFLOW_BACKEND_STORE_URI
-            value: "sqlite:///mlflow/mlflow.db"
-          - name: MLFLOW_DEFAULT_ARTIFACT_ROOT
-            value: "/mlflow/artifacts"
+        postgresql:
+          enabled: true
+          postgresqlUsername: mlflow
+          postgresqlPassword: mlflowpass
+          postgresqlDatabase: mlflow_db
+          persistence:
+            enabled: true
+            storageClass: gp2
+            size: 5Gi
 
         securityContext:
           runAsUser: 1000
